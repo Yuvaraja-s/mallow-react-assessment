@@ -26,6 +26,8 @@ export default function AddUserModal({ onClose, onUserAdded }) {
   const [first_name, setFirstName] = useState('');
   const [last_name, setLastName] = useState('');
   const [email, setEmail] = useState('');
+  const [showAddModal, setShowAddModal] = useState(false);
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -45,7 +47,16 @@ export default function AddUserModal({ onClose, onUserAdded }) {
         <Input placeholder="First Name" value={first_name} onChange={e => setFirstName(e.target.value)} required />
         <Input placeholder="Last Name" value={last_name} onChange={e => setLastName(e.target.value)} required />
         <Input placeholder="Email" type="email" value={email} onChange={e => setEmail(e.target.value)} required />
-        <Button type="submit">Add</Button>
+        <button onClick={() => setShowAddModal(true)} style={{ marginBottom: '20px', padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', cursor: 'pointer' }}>
+        Add User
+        </button>
+{showAddModal && (
+  <AddUserModal
+    onClose={() => setShowAddModal(false)}
+    onUserAdded={() => dispatch(getUsers(page))}
+  />
+)}
+
       </Form>
     </Modal>
   );

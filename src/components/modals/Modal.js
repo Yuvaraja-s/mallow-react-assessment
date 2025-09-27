@@ -30,6 +30,15 @@ const CloseButton = styled.button`
   cursor: pointer;
 `;
 
+const ModalContent = styled.div`
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 400px;
+  max-width: 90%;
+`;
+
+
 export default function Modal({ children, onClose }) {
   return (
     <ModalWrapper>
