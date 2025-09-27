@@ -5,7 +5,55 @@ import styled from 'styled-components';
 
 const ListWrapper = styled.div`
   padding: 20px;
+  max-width: 800px;
+  margin: auto;
 `;
+
+const UserItem = styled.li`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 0;
+  border-bottom: 1px solid #ccc;
+
+  button {
+    margin-left: 5px;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+  }
+
+  button.edit {
+    background-color: #ffc107;
+    color: white;
+  }
+
+  button.delete {
+    background-color: #dc3545;
+    color: white;
+  }
+`;
+
+const SearchInput = styled.input`
+  padding: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin-bottom: 20px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+`;
+
+const AddButton = styled.button`
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  margin-bottom: 20px;
+`;
+
 
 function UserList() {
   const dispatch = useDispatch();
@@ -48,16 +96,33 @@ const filteredUsers = users.filter(user =>
         onChange={e => setSearchTerm(e.target.value)}
         style={{ padding: '10px', width: '300px', marginBottom: '20px' }}
         />
+        <AddButton onClick={() => setShowAddModal(true)}>Add User</AddButton>
+<SearchInput placeholder="Search users..." value={searchTerm} onChange={e => setSearchTerm(e.target.value)} />
+
+<ul>
+  {filteredUsers.map(user => (
+    <UserItem key={user.id}>
+      {user.first_name} {user.last_name} - {user.email}
+      <div>
+        <button className="edit" onClick={() => setEditUser(user)}>Edit</button>
+        <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
+      </div>
+    </UserItem>
+  ))}
+</ul>
+
       {loading ? <p>Loading...</p> : error ? <p>{error}</p> : (
-       <ul>
-        {filteredUsers.map(user => (
-            <li key={user.id}>
-            {user.first_name} {user.last_name} - {user.email}
-            <button onClick={() => setEditUser(user)}>Edit</button>
-            <button onClick={() => handleDelete(user.id)}>Delete</button>
-            </li>
-        ))}
-        </ul>
+      <ul>
+  {filteredUsers.map(user => (
+    <UserItem key={user.id}>
+      {user.first_name} {user.last_name} - {user.email}
+      <div>
+        <button className="edit" onClick={() => setEditUser(user)}>Edit</button>
+        <button className="delete" onClick={() => handleDelete(user.id)}>Delete</button>
+      </div>
+    </UserItem>
+  ))}
+</ul>
 
         {editUser && <EditUserModal user={editUser} onClose={() => setEditUser(null)} onUserUpdated={() => dispatch(getUsers(page))} />}
       )}
