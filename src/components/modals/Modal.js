@@ -11,33 +11,40 @@ const ModalWrapper = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1000;
 `;
 
 const ModalContent = styled.div`
   background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
+  padding: 25px;
+  border-radius: 12px;
+  width: 450px;
   max-width: 90%;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+  position: relative;
+
+  @media (max-width: 480px) {
+    padding: 20px;
+    width: 95%;
+  }
 `;
 
 const CloseButton = styled.button`
-  background: red;
-  color: white;
+  background: #dc3545;
+  color: #fff;
   border: none;
-  padding: 5px 10px;
-  float: right;
+  padding: 6px 12px;
+  border-radius: 6px;
+  position: absolute;
+  top: 15px;
+  right: 15px;
   cursor: pointer;
-`;
+  font-weight: 600;
 
-const ModalContent = styled.div`
-  background: #fff;
-  padding: 20px;
-  border-radius: 10px;
-  width: 400px;
-  max-width: 90%;
+  &:hover {
+    opacity: 0.9;
+  }
 `;
-
 
 export default function Modal({ children, onClose }) {
   return (
